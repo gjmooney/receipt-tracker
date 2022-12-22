@@ -8,17 +8,10 @@ export function HomeScreen({ navigation }) {
       <HomeSplash />
       <Button
         title="Add new item"
-        onPress={() =>
-          navigation.navigate("ItemSubmit", {
-            itemId: 86,
-            otherParam: "anything you want here",
-          })
-        }
+        onPress={() => navigation.navigate("ItemSubmit")}
       />
-      <Button
-        title="Update the title"
-        onPress={() => navigation.setOptions({ title: "Updated!" })}
-      />
+      <Button title="View Items" />
+      <Button title="View History" />
     </View>
   );
 }

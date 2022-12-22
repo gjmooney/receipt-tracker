@@ -22,19 +22,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerRight: () => (
-              <Button
-                onPress={() => alert("This is a button!")}
-                title="Info"
-                color="#fff"
-              />
-            ),
-          }}
-        />
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen
           name="ItemSubmit"
           component={ItemSubmitScreen}

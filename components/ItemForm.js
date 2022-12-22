@@ -2,6 +2,8 @@ import * as React from "react";
 import { Text, View, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
+import { addItem } from "../controllers/dbService";
+
 export default function ItemForm() {
   const {
     register,
@@ -20,8 +22,10 @@ export default function ItemForm() {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = ({ type, brand, store, price, date }) => {
+    //console.log(data);
+
+    addItem({ type, brand, store, price, date });
   };
 
   const onChange = (arg) => {

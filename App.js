@@ -5,7 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Constants from "expo-constants";
 
 import { ItemSubmitScreen } from "./views/ItemSubmitScreen";
-import { HomeScreen } from "./views/HomeScreen";
+import HomeScreen from "./views/HomeScreen";
+import HistoryScreen from "./views/HistoryScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,11 @@ export default function App() {
           name="ItemSubmit"
           component={ItemSubmitScreen}
           options={{ title: "Add Item" }}
+        />
+        <Stack.Screen
+          name="History"
+          component={HistoryScreen}
+          options={{ title: "History" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

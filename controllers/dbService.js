@@ -1,4 +1,4 @@
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
 export const addItem = async ({ type, brand, store, price, date }) => {
@@ -14,4 +14,16 @@ export const addItem = async ({ type, brand, store, price, date }) => {
   } catch (e) {
     console.error("Error adding document: ", e);
   }
+};
+
+export const getAllItems = async () => {
+  const querySnapshot = await getDocs(collection(db, "items"));
+  let data = [];
+  querySnapshot.forEach((doc) => {
+    //console.log(doc.id, "=>", doc.data());
+    data.push(doc.data());
+  });
+  console.log("fb ", data);
+
+  return data;
 };

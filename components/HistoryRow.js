@@ -1,11 +1,11 @@
 import { Text, View, StyleSheet } from "react-native";
 
 const HistoryRow = ({ item }) => {
-  console.log("ROW: ", item.type);
+  console.log("ROW: ", item.history);
   return (
     <View style={styles.row}>
       <Text style={styles.item}>
-        {item.type} {item.store} €{item.price}
+        {item.type} {item.history.store} €{item.history.price}
       </Text>
     </View>
   );

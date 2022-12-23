@@ -26,6 +26,13 @@ export default function ItemForm() {
     //console.log(data);
 
     addItem({ type, brand, store, price, date });
+    reset({
+      type: "",
+      brand: "",
+      store: "",
+      price: "",
+      date: "",
+    });
   };
 
   const onChange = (arg) => {
@@ -120,11 +127,11 @@ export default function ItemForm() {
           title="Reset"
           onPress={() => {
             reset({
-              type: "Bill",
-              brand: "Luo",
-              store: "Bill",
-              price: "Luo",
-              date: "Bill",
+              type: "type",
+              brand: "brand",
+              store: "store",
+              price: "price",
+              date: "date",
             });
           }}
         />

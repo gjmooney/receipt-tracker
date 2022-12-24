@@ -1,17 +1,16 @@
 import { Text, View, StyleSheet } from "react-native";
 
-const HistoryRow = ({ history }) => {
-  //console.log("HIST ROW: ", item.history);
-  console.log("in hist row");
+const ItemRow = ({ item, onPress }) => {
+  console.log("IR");
   return (
     <View style={styles.row}>
-      <Text style={styles.item}>
-        {history.brand} {history.store} €{history.price} {history.date}
+      <Text style={styles.item} onPress={onPress}>
+        {item.type} €{item.history.price}
       </Text>
     </View>
   );
 };
-export default HistoryRow;
+export default ItemRow;
 
 const styles = StyleSheet.create({
   row: {

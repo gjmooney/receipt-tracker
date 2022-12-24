@@ -25,7 +25,6 @@ export const getAllItems = async () => {
     //console.log(doc.id, "=>", doc.data());
     data.push(doc.data());
   });
-  console.log("fb ", data);
 
   return data;
 };

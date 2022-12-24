@@ -6,6 +6,7 @@ import Constants from "expo-constants";
 
 import { ItemSubmitScreen } from "./views/ItemSubmitScreen";
 import HomeScreen from "./views/HomeScreen";
+import ItemScreen from "./views/ItemScreen";
 import HistoryScreen from "./views/HistoryScreen";
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,11 @@ export default function App() {
           name="ItemSubmit"
           component={ItemSubmitScreen}
           options={{ title: "Add Item" }}
+        />
+        <Stack.Screen
+          name="Item"
+          component={ItemScreen}
+          options={{ title: "Item" }}
         />
         <Stack.Screen
           name="History"

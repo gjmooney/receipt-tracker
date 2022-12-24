@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { collection, addDoc, getDocs, doc } from "firebase/firestore";
-import { db } from "../firebase";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
-import { getAllItems } from "../controllers/dbService";
-
 import HistoryRow from "../components/HistoryRow";
+import ItemDivider from "../components/Divider";
 
-const HistoryScreen = () => {
-  const [items, setItems] = useState();
-  //getAllItems();
-
-  useEffect(() => {
-    getAllItems().then((items) => setItems(items));
-    console.log("ITEMS: ", items);
-  }, []);
-
+const HistoryScreen = ({ route, navigation }) => {
+  const { item } = route.params;
+  console.log("HS: ", item.history);
   return (
     <View style={styles.container}>
+      <Text style={styles.headerRow}>Brand Store Price Date</Text>
+      <ItemDivider />
       <FlatList
-        data={items}
-        renderItem={({ item }) => <HistoryRow item={item} />}
+        data={[item.history]}
+        renderItem={({ item }) => <HistoryRow history={item} />}
       />
     </View>
   );
@@ -29,14 +22,12 @@ const HistoryScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
     paddingTop: 22,
   },
-  item: {
+  headerRow: {
+    textAlign: "center",
     padding: 10,
-    fontSize: 18,
-    height: 44,
+    fontSize: 28,
   },
 });
 

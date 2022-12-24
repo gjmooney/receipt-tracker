@@ -10,11 +10,8 @@ function HomeScreen({ navigation }) {
         title="Add new item"
         onPress={() => navigation.navigate("ItemSubmit")}
       />
-      <Button title="View Items" />
-      <Button
-        title="View History"
-        onPress={() => navigation.navigate("History")}
-      />
+
+      <Button title="View Items" onPress={() => navigation.navigate("Item")} />
     </View>
   );
 }

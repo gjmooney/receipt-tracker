@@ -4,6 +4,12 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import HistoryRow from "../components/HistoryRow";
 import ItemDivider from "../components/Divider";
 
+/**
+ *
+ * This screen shows the history of an individual item
+ * @param {*} param0
+ * @returns
+ */
 const HistoryScreen = ({ route, navigation }) => {
   const { item } = route.params;
   console.log("HS: ", item.history);
@@ -12,7 +18,7 @@ const HistoryScreen = ({ route, navigation }) => {
       <Text style={styles.headerRow}>Brand Store Price Date</Text>
       <ItemDivider />
       <FlatList
-        data={[item.history]}
+        data={item.history}
         renderItem={({ item }) => <HistoryRow history={item} />}
       />
     </View>

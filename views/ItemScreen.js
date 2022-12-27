@@ -8,6 +8,13 @@ import { getAllItems } from "../controllers/dbService";
 import ItemRow from "../components/ItemRow";
 import ItemDivider from "../components/Divider";
 
+/**
+ *
+ * This screen will show a list of items,
+ * their most recent prices and the store
+ * @param {} param0
+ * @returns
+ */
 const ItemScreen = ({ navigation }) => {
   const [items, setItems] = useState();
 

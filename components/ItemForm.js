@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, View, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
-import { addItem } from "../controllers/dbService";
+import { addItem, checkIfItemExistsAndAdd } from "../controllers/dbService";
 
 export default function ItemForm() {
   const {
@@ -23,9 +23,7 @@ export default function ItemForm() {
   });
 
   const onSubmit = ({ type, brand, store, price, date }) => {
-    //console.log(data);
-
-    addItem({ type, brand, store, price, date });
+    checkIfItemExistsAndAdd({ type, brand, store, price, date });
     reset({
       type: "",
       brand: "",
@@ -127,11 +125,11 @@ export default function ItemForm() {
           title="Reset"
           onPress={() => {
             reset({
-              type: "type",
-              brand: "brand",
-              store: "store",
-              price: "price",
-              date: "date",
+              type: "test_type",
+              brand: "test_brand",
+              store: "test_store",
+              price: "test_price",
+              date: "test_date",
             });
           }}
         />

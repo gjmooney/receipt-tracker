@@ -31,7 +31,7 @@ const ItemScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerRow}>TYPE PRICE</Text>
+      <Text style={styles.headerRow}>TYPE PRICE STORE</Text>
       <ItemDivider />
       <FlatList
         data={items}

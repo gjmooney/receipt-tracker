@@ -1,10 +1,13 @@
 import { Text, View, StyleSheet } from "react-native";
 
 const ItemRow = ({ item, onPress }) => {
+  const lastIndex = item.history.length - 1;
+
   return (
     <View style={styles.row}>
       <Text style={styles.item} onPress={onPress}>
-        {item.type} €{item.history.price}
+        {item.type} €{item.history[lastIndex].price}{" "}
+        {item.history[lastIndex].store}
       </Text>
     </View>
   );

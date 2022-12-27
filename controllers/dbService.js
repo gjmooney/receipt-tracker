@@ -1,4 +1,9 @@
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../firebase";
 
 export const addItem = async ({ type, brand, store, price, date }) => {
@@ -9,7 +14,8 @@ export const addItem = async ({ type, brand, store, price, date }) => {
         brand: brand,
         store: store,
         price: price,
-        date: Date.now(),
+        date: date,
+        timestamp: serverTimestamp(),
       },
     });
     console.log("Document written with ID: ", docRef.id);

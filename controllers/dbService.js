@@ -9,7 +9,7 @@ export const addItem = async ({ type, brand, store, price, date }) => {
         brand: brand,
         store: store,
         price: price,
-        date: date,
+        date: Date.now(),
       },
     });
     console.log("Document written with ID: ", docRef.id);

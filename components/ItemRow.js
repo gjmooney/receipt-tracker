@@ -1,7 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 
 const ItemRow = ({ item, onPress }) => {
-  console.log("IR");
   return (
     <View style={styles.row}>
       <Text style={styles.item} onPress={onPress}>

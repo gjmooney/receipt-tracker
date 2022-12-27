@@ -21,6 +21,10 @@ export const addItem = async ({ type, brand, store, price, date }) => {
 export const getAllItems = async () => {
   const querySnapshot = await getDocs(collection(db, "items"));
   let data = [];
+
+  const source = querySnapshot.metadata.fromCache ? "local cache" : "server";
+  console.log("Data came from " + source);
+
   querySnapshot.forEach((doc) => {
     //console.log(doc.id, "=>", doc.data());
     data.push(doc.data());

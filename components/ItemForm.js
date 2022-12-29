@@ -1,8 +1,10 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { useForm, Controller } from "react-hook-form";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { addItem, checkIfItemExistsAndAdd } from "../controllers/dbService";
+import DatePickerThing from "./DatePickerThing";
 
 export default function ItemForm() {
   const {
@@ -21,6 +23,29 @@ export default function ItemForm() {
       date: "",
     },
   });
+
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+
+  const onDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const showTimepicker = () => {
+    showMode("time");
+  };
 
   const onSubmit = ({ type, brand, store, price, date }) => {
     checkIfItemExistsAndAdd({ type, brand, store, price, date });
@@ -57,6 +82,7 @@ export default function ItemForm() {
         name="type"
         rules={{ required: true }}
       />
+      {errors.type && <Text>This is required.</Text>}
 
       <Text style={styles.label}>Brand</Text>
       <Controller
@@ -70,7 +96,6 @@ export default function ItemForm() {
           />
         )}
         name="brand"
-        rules={{ required: true }}
       />
 
       <Text style={styles.label}>Store</Text>
@@ -87,6 +112,7 @@ export default function ItemForm() {
         name="store"
         rules={{ required: { value: true, message: "Name is required" } }}
       />
+      {errors.store && <Text>This is required.</Text>}
 
       <Text style={styles.label}>Price</Text>
       <Controller
@@ -103,6 +129,7 @@ export default function ItemForm() {
         name="price"
         rules={{ required: true, valueAsNumber: true }}
       />
+      {errors.price && <Text>This is required.</Text>}
 
       <Text style={styles.label}>Date</Text>
       <Controller
@@ -113,11 +140,22 @@ export default function ItemForm() {
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             value={value}
+            onFocus={() => setShow(true)}
           />
         )}
         name="date"
         rules={{ required: true }}
       />
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onDateChange}
+        />
+      )}
 
       <View style={styles.button}>
         <Button

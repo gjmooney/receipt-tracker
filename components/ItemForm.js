@@ -97,6 +97,7 @@ export default function ItemForm() {
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             value={value}
+            keyboardType="numeric"
           />
         )}
         name="price"

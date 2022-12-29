@@ -85,7 +85,7 @@ export default function ItemForm() {
           />
         )}
         name="store"
-        rules={{ required: true }}
+        rules={{ required: { value: true, message: "Name is required" } }}
       />
 
       <Text style={styles.label}>Price</Text>
@@ -101,7 +101,7 @@ export default function ItemForm() {
           />
         )}
         name="price"
-        rules={{ required: true }}
+        rules={{ required: true, valueAsNumber: true }}
       />
 
       <Text style={styles.label}>Date</Text>
@@ -150,7 +150,7 @@ export default function ItemForm() {
 
 const styles = StyleSheet.create({
   label: {
-    color: "white",
+    color: "black",
     margin: 10,
     marginLeft: 0,
   },
@@ -166,7 +166,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 16,
     padding: 8,
-    backgroundColor: "#0e101c",
   },
   input: {
     backgroundColor: "grey",

@@ -141,6 +141,7 @@ export default function ItemForm() {
             onChangeText={(value) => onChange(value)}
             value={value}
             onFocus={() => setShow(true)}
+            showSoftInputOnFocus={false}
           />
         )}
         name="date"

@@ -23,9 +23,9 @@ export default function ItemForm() {
     },
   });
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState("");
   const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     console.log("DATE ", date);
@@ -61,6 +61,7 @@ export default function ItemForm() {
 
   const onSubmit = ({ type, brand, store, price, date }) => {
     checkIfItemExistsAndAdd({ type, brand, store, price, date });
+    setDate("");
     reset({
       type: "",
       brand: "",
@@ -146,21 +147,32 @@ export default function ItemForm() {
       <Text style={styles.label}>Date</Text>
       <Controller
         control={control}
-        render={({ field: { onChange, onBlur, value } }) =>
-          show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={new Date()}
-              mode={mode}
-              is24Hour={true}
-              display="default"
-              onChange={(value) => {
-                onChange(value.nativeEvent.timestamp);
-                setShow(false);
-              }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <>
+            <TextInput
+              style={styles.input}
+              onPressIn={() => setShow(true)}
+              showSoftInputOnFocus={false}
+              value={date}
             />
-          )
-        }
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={new Date()}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={(value) => {
+                  onChange(value.nativeEvent.timestamp);
+                  setShow(false);
+                  setDate(
+                    new Date(value.nativeEvent.timestamp).toLocaleDateString()
+                  );
+                }}
+              />
+            )}
+          </>
+        )}
         name="date"
         rules={{ required: true }}
       />
@@ -171,6 +183,7 @@ export default function ItemForm() {
           color
           title="Reset"
           onPress={() => {
+            setDate("test_date");
             reset({
               type: "test_type",
               brand: "test_brand",

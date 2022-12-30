@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -25,7 +25,11 @@ export default function ItemForm() {
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    console.log("DATE ", date);
+  }, [date]);
 
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -44,6 +48,15 @@ export default function ItemForm() {
 
   const showTimepicker = () => {
     showMode("time");
+  };
+
+  const setTDate = (event, date) => {
+    const {
+      type,
+      nativeEvent: { timestamp },
+    } = event;
+    setDate(new Date(timestamp));
+    setShow(false);
   };
 
   const onSubmit = ({ type, brand, store, price, date }) => {
@@ -133,29 +146,24 @@ export default function ItemForm() {
       <Text style={styles.label}>Date</Text>
       <Controller
         control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={(value) => onChange(value)}
-            value={value}
-            onFocus={() => setShow(true)}
-            showSoftInputOnFocus={false}
-          />
-        )}
+        render={({ field: { onChange, onBlur, value } }) =>
+          show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={new Date()}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={(value) => {
+                onChange(value.nativeEvent.timestamp);
+                setShow(false);
+              }}
+            />
+          )
+        }
         name="date"
         rules={{ required: true }}
       />
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onDateChange}
-        />
-      )}
 
       <View style={styles.button}>
         <Button

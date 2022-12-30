@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TextInput, Button, Alert } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  Button,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -80,7 +88,7 @@ export default function ItemForm() {
   console.log("errors", errors);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.label}>Type (Butter, nuggies, etc.)</Text>
       <Controller
         control={control}
@@ -149,12 +157,15 @@ export default function ItemForm() {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <>
-            <TextInput
+            {/* <TextInput
               style={styles.input}
-              onPressIn={() => setShow(true)}
+              onFocus={() => setShow(true)}
               showSoftInputOnFocus={false}
               value={date}
-            />
+            /> */}
+            <Text style={styles.input} onPress={() => setShow(true)}>
+              {date}
+            </Text>
             {show && (
               <DateTimePicker
                 testID="dateTimePicker"
@@ -203,7 +214,7 @@ export default function ItemForm() {
           onPress={handleSubmit(onSubmit)}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -222,7 +233,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "center",
     borderRadius: 16,
     padding: 8,
   },

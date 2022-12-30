@@ -88,7 +88,7 @@ export default function ItemForm() {
   console.log("errors", errors);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} keyboardDismissMode="on-drag">
       <Text style={styles.label}>Type (Butter, nuggies, etc.)</Text>
       <Controller
         control={control}

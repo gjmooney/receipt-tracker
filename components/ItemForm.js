@@ -4,7 +4,6 @@ import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { addItem, checkIfItemExistsAndAdd } from "../controllers/dbService";
-import DatePickerThing from "./DatePickerThing";
 
 export default function ItemForm() {
   const {

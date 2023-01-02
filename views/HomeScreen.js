@@ -39,9 +39,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    justifyContent: "flex-start",
-    padding: 10,
-    fontSize: 28,
+    padding: 30,
   },
   buttonContainer: {
     flex: 1,

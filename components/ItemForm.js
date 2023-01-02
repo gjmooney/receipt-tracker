@@ -7,6 +7,7 @@ import {
   Button,
   ScrollView,
   Pressable,
+  KeyboardAvoidingView,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -88,111 +89,111 @@ export default function ItemForm() {
   console.log("errors", errors);
 
   return (
-    <ScrollView style={styles.container} keyboardDismissMode="on-drag">
-      <Text style={styles.label}>Type (Butter, nuggies, etc.)</Text>
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={(value) => onChange(value)}
-            value={value}
-          />
-        )}
-        name="type"
-        rules={{ required: true }}
-      />
-      {errors.type && <Text>This is required.</Text>}
-
-      <Text style={styles.label}>Brand</Text>
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={(value) => onChange(value)}
-            value={value}
-          />
-        )}
-        name="brand"
-      />
-
-      <Text style={styles.label}>Store</Text>
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={(value) => onChange(value)}
-            value={value}
-          />
-        )}
-        name="store"
-        rules={{ required: { value: true, message: "Name is required" } }}
-      />
-      {errors.store && <Text>This is required.</Text>}
-
-      <Text style={styles.label}>Price</Text>
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            onBlur={onBlur}
-            onChangeText={(value) => onChange(value)}
-            value={value}
-            keyboardType="numeric"
-          />
-        )}
-        name="price"
-        rules={{ required: true, valueAsNumber: true }}
-      />
-      {errors.price && <Text>This is required.</Text>}
-
-      <Text style={styles.label}>Date</Text>
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <>
-            {/* <TextInput
+    <ScrollView
+      contentContainerStyle={styles.overallContainer}
+      keyboardDismissMode="on-drag"
+    >
+      <View>
+        <Text style={styles.label}>Type (Butter, nuggies, etc.)</Text>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
               style={styles.input}
-              onFocus={() => setShow(true)}
-              showSoftInputOnFocus={false}
-              value={date}
-            /> */}
-            <Text style={styles.input} onPress={() => setShow(true)}>
-              {date}
-            </Text>
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={new Date()}
-                mode={mode}
-                is24Hour={true}
-                display="default"
-                onChange={(value) => {
-                  onChange(value.nativeEvent.timestamp);
-                  setShow(false);
-                  setDate(
-                    new Date(value.nativeEvent.timestamp).toLocaleDateString()
-                  );
-                }}
-              />
-            )}
-          </>
-        )}
-        name="date"
-        rules={{ required: true }}
-      />
+              onBlur={onBlur}
+              onChangeText={(value) => onChange(value)}
+              value={value}
+            />
+          )}
+          name="type"
+          rules={{ required: true }}
+        />
+        {errors.type && <Text>This is required.</Text>}
 
-      <View style={styles.button}>
-        <Button
-          style={styles.buttonInner}
-          color
-          title="Reset"
+        <Text style={styles.label}>Brand</Text>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={(value) => onChange(value)}
+              value={value}
+            />
+          )}
+          name="brand"
+        />
+
+        <Text style={styles.label}>Store</Text>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={(value) => onChange(value)}
+              value={value}
+            />
+          )}
+          name="store"
+          rules={{ required: { value: true, message: "Name is required" } }}
+        />
+        {errors.store && <Text>This is required.</Text>}
+
+        <Text style={styles.label}>Price</Text>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={(value) => onChange(value)}
+              value={value}
+              keyboardType="numeric"
+            />
+          )}
+          name="price"
+          rules={{ required: true, valueAsNumber: true }}
+        />
+        {errors.price && <Text>This is required.</Text>}
+
+        <Text style={styles.label}>Date</Text>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <>
+              <Text style={styles.input} onPress={() => setShow(true)}>
+                {date}
+              </Text>
+              {show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={new Date()}
+                  mode={mode}
+                  is24Hour={true}
+                  display="default"
+                  onChange={(value) => {
+                    onChange(value.nativeEvent.timestamp);
+                    setShow(false);
+                    setDate(
+                      new Date(value.nativeEvent.timestamp).toLocaleDateString()
+                    );
+                  }}
+                />
+              )}
+            </>
+          )}
+          name="date"
+          rules={{ required: true }}
+        />
+      </View>
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.buttonContainer}
+      >
+        <Pressable
+          style={styles.button}
           onPress={() => {
             setDate("test_date");
             reset({
@@ -203,17 +204,14 @@ export default function ItemForm() {
               date: "test_date",
             });
           }}
-        />
-      </View>
+        >
+          <Text style={styles.buttonText}>Reset</Text>
+        </Pressable>
 
-      <View style={styles.button}>
-        <Button
-          style={styles.buttonInner}
-          color
-          title="Submit"
-          onPress={handleSubmit(onSubmit)}
-        />
-      </View>
+        <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </Pressable>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 }
@@ -224,18 +222,37 @@ const styles = StyleSheet.create({
     margin: 10,
     marginLeft: 0,
   },
-  button: {
-    marginTop: 40,
-    color: "white",
-    height: 40,
-    backgroundColor: "#ec5990",
-    borderRadius: 4,
-  },
-  container: {
+  overallContainer: {
     flex: 1,
-    borderRadius: 16,
-    padding: 8,
+    padding: 10,
   },
+  formContainer: {
+    flex: 1,
+    justifyContent: "flex-start",
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    //marginTop: 100,
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    margin: 10,
+    borderRadius: 8,
+    elevation: 3,
+    backgroundColor: "black",
+  },
+  buttonText: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
+
   input: {
     backgroundColor: "grey",
     color: "white",

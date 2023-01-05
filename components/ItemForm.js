@@ -22,10 +22,11 @@ export default function ItemForm() {
     control,
     reset,
     formState: { errors },
+    getValues,
   } = useForm({
     defaultValues: {
       type: "",
-      brand: "",
+      brand: "shit",
       store: "",
       price: "",
       date: "",
@@ -74,9 +75,9 @@ export default function ItemForm() {
     reset({
       type: "",
       brand: "",
-      store: "",
+      store: getValues("store"),
       price: "",
-      date: "",
+      date: getValues("date"),
     });
   };
 
@@ -84,6 +85,27 @@ export default function ItemForm() {
     return {
       value: arg.nativeEvent.text,
     };
+  };
+
+  const onResetPress = () => {
+    setDate("");
+    reset({
+      type: "",
+      brand: "",
+      store: "",
+      price: "",
+      date: "",
+    });
+  };
+  const onResetLongPress = () => {
+    setDate("test_date");
+    reset({
+      type: "test_type",
+      brand: "test_brand",
+      store: "test_store",
+      price: "test_price",
+      date: "test_date",
+    });
   };
 
   console.log("errors", errors);
@@ -136,6 +158,7 @@ export default function ItemForm() {
             />
           )}
           name="store"
+          defaultValue="cum"
           rules={{ required: { value: true, message: "Name is required" } }}
         />
         {errors.store && <Text>This is required.</Text>}
@@ -194,16 +217,8 @@ export default function ItemForm() {
       >
         <Pressable
           style={styles.button}
-          onPress={() => {
-            setDate("test_date");
-            reset({
-              type: "test_type",
-              brand: "test_brand",
-              store: "test_store",
-              price: "test_price",
-              date: "test_date",
-            });
-          }}
+          onPress={onResetPress}
+          onLongPress={onResetLongPress}
         >
           <Text style={styles.buttonText}>Reset</Text>
         </Pressable>

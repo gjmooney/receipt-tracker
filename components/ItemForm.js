@@ -26,7 +26,7 @@ export default function ItemForm() {
   } = useForm({
     defaultValues: {
       type: "",
-      brand: "shit",
+      brand: "",
       store: "",
       price: "",
       date: "",
@@ -71,7 +71,7 @@ export default function ItemForm() {
 
   const onSubmit = ({ type, brand, store, price, date }) => {
     checkIfItemExistsAndAdd({ type, brand, store, price, date });
-    setDate("");
+    setDate(new Date(getValues("date")).toLocaleDateString());
     reset({
       type: "",
       brand: "",

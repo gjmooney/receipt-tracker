@@ -13,6 +13,13 @@ import ItemDivider from "../components/Divider";
 const HistoryScreen = ({ route, navigation }) => {
   const { item } = route.params;
   console.log("HS: ", item.history);
+
+  useEffect(() => {
+    navigation.setParams({
+      history: item.history,
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.headerRow}>Brand Store Price Date</Text>

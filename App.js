@@ -39,12 +39,13 @@ export default function App() {
         <Stack.Screen
           name="History"
           component={HistoryScreen}
-          options={({ navigation }) => ({
+          options={({ route, navigation }) => ({
             title: "chart",
-
             headerRight: () => (
               <Button
-                onPress={() => navigation.navigate("Chart")}
+                onPress={() =>
+                  navigation.navigate("Chart", route.params.history)
+                }
                 title="Graph"
                 color="grey"
               />

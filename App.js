@@ -38,7 +38,16 @@ export default function App() {
         <Stack.Screen
           name="History"
           component={HistoryScreen}
-          options={{ title: "History" }}
+          options={{
+            title: "History",
+            headerRight: () => (
+              <Button
+                onPress={() => alert("This is a button!")}
+                title="Graph"
+                color="grey"
+              />
+            ),
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

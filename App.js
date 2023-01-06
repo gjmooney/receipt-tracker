@@ -8,6 +8,7 @@ import { ItemSubmitScreen } from "./views/ItemSubmitScreen";
 import HomeScreen from "./views/HomeScreen";
 import ItemScreen from "./views/ItemScreen";
 import HistoryScreen from "./views/HistoryScreen";
+import GraphScreen from "./views/GraphScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,16 +39,22 @@ export default function App() {
         <Stack.Screen
           name="History"
           component={HistoryScreen}
-          options={{
-            title: "History",
+          options={({ navigation }) => ({
+            title: "chart",
+
             headerRight: () => (
               <Button
-                onPress={() => alert("This is a button!")}
+                onPress={() => navigation.navigate("Chart")}
                 title="Graph"
                 color="grey"
               />
             ),
-          }}
+          })}
+        />
+        <Stack.Screen
+          name="Chart"
+          component={GraphScreen}
+          options={{ title: "Chart" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

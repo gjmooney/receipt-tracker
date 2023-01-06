@@ -3,8 +3,17 @@ import { Defs, LinearGradient, Stop } from "react-native-svg";
 import { LineChart, Grid } from "react-native-svg-charts";
 
 const GraphScreen = ({ route }) => {
-  const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
-  console.log("ROUR ", route);
+  const history = route.params;
+  const dataT = [
+    50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80,
+  ];
+
+  let data = history.map((item) => {
+    // unary + to convert string price to number
+    return +item.price;
+  });
+
+  console.log("DATA: ", data);
 
   /**
    * Both below functions should preferably be their own React Components
@@ -45,13 +54,13 @@ const GraphScreen = ({ route }) => {
           textAnchor={"middle"}
           stroke={"rgb(134, 65, 244)"}
         >
-          {`${data[5]}ºC`}
+          {`${dataT[5]}ºC`}
         </Text>
       </G>
       <G x={75 / 2}>
-        <Line y1={50 + 40} y2={y(data[5])} stroke={"grey"} strokeWidth={2} />
+        <Line y1={50 + 40} y2={y(dataT[5])} stroke={"grey"} strokeWidth={2} />
         <Circle
-          cy={y(data[5])}
+          cy={y(dataT[5])}
           r={6}
           stroke={"rgb(134, 65, 244)"}
           strokeWidth={2}

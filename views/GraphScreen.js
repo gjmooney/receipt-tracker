@@ -1,6 +1,7 @@
 import React from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Defs, LinearGradient, Stop } from "react-native-svg";
-import { LineChart, Grid } from "react-native-svg-charts";
+import { LineChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 
 const GraphScreen = ({ route }) => {
   const history = route.params;
@@ -8,12 +9,17 @@ const GraphScreen = ({ route }) => {
     50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80,
   ];
 
-  let data = history.map((item) => {
+  let priceData = [];
+  let dateData = [];
+
+  history.map((item) => {
     // unary + to convert string price to number
-    return +item.price;
+    priceData.push(+item.price);
+    dateData.push(+item.date);
   });
 
-  console.log("DATA: ", data);
+  console.log("Price: ", priceData);
+  console.log("DATE: ", dateData);
 
   /**
    * Both below functions should preferably be their own React Components
@@ -79,19 +85,37 @@ const GraphScreen = ({ route }) => {
     </Defs>
   );
 
+  const axesSvg = { fontSize: 10, fill: "grey" };
+  const verticalContentInset = { top: 10, bottom: 10 };
+  const xAxisHeight = 30;
+
   return (
-    <LineChart
-      style={{ height: 200 }}
-      data={data}
-      contentInset={{ top: 20, bottom: 20 }}
-      svg={{
-        strokeWidth: 2,
-        stroke: "url(#gradient)",
-      }}
-    >
-      <Grid />
-      <Gradient />
-    </LineChart>
+    <View style={{ height: 200, padding: 20, flexDirection: "row" }}>
+      <YAxis
+        data={priceData}
+        style={{ marginBottom: xAxisHeight }}
+        contentInset={verticalContentInset}
+        svg={axesSvg}
+        formatLabel={(value) => `€${value}`}
+      />
+      <View style={{ flex: 1, marginLeft: 10 }}>
+        <LineChart
+          style={{ flex: 1 }}
+          data={priceData}
+          contentInset={verticalContentInset}
+          svg={{ stroke: "rgb(134, 65, 244)" }}
+        >
+          <Grid />
+        </LineChart>
+        <XAxis
+          style={{ marginHorizontal: -10, height: xAxisHeight }}
+          data={priceData}
+          formatLabel={(value, index) => index}
+          contentInset={{ left: 10, right: 10 }}
+          svg={axesSvg}
+        />
+      </View>
+    </View>
   );
 };
 

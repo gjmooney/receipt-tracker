@@ -15,7 +15,7 @@ const GraphScreen = ({ route }) => {
   history.map((item) => {
     // unary + to convert string price to number
     priceData.push(+item.price);
-    dateData.push(+item.date);
+    dateData.push(item.date);
   });
 
   console.log("Price: ", priceData);
@@ -110,8 +110,10 @@ const GraphScreen = ({ route }) => {
         <XAxis
           style={{ marginHorizontal: -10, height: xAxisHeight }}
           data={priceData}
-          formatLabel={(value, index) => index}
-          contentInset={{ left: 10, right: 10 }}
+          formatLabel={(value, index) =>
+            new Date(dateData[index]).toLocaleDateString()
+          }
+          contentInset={{ left: 30, right: 30 }}
           svg={axesSvg}
         />
       </View>

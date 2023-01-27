@@ -10,7 +10,7 @@ import {
   arrayUnion,
   setDoc,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../config/firebase";
 
 export const addItem = async ({ type, brand, store, price, date }) => {
   console.log("ADD ", type, brand, store, price, date);

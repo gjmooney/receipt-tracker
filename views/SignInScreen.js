@@ -1,21 +1,19 @@
 import React from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
-import { StackScreenProps } from "@react-navigation/stack";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();
 
-const SignUpScreen = ({ navigation }) => {
+const SignInScreen = () => {
   const [value, setValue] = React.useState({
     email: "",
     password: "",
     error: "",
   });
 
-  async function signUp() {
+  async function signIn() {
     if (value.email === "" || value.password === "") {
       setValue({
         ...value,
@@ -25,8 +23,8 @@ const SignUpScreen = ({ navigation }) => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, value.email, value.password);
-      navigation.navigate("Sign In");
+      await signInWithEmailAndPassword(auth, value.email, value.password);
+      navigation.navigate("Home");
     } catch (error) {
       setValue({
         ...value,
@@ -37,7 +35,7 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Signup screen!</Text>
+      <Text>Signin screen!</Text>
 
       {!!value.error && (
         <View style={styles.error}>
@@ -63,7 +61,7 @@ const SignUpScreen = ({ navigation }) => {
           leftIcon={<Icon name="key" size={16} />}
         />
 
-        <Button title="Sign up" buttonStyle={styles.control} onPress={signUp} />
+        <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
       </View>
     </View>
   );
@@ -95,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default SignInScreen;

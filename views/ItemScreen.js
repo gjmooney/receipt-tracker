@@ -4,6 +4,7 @@ import { db } from "../config/firebase";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import { getAllItems } from "../controllers/dbService";
+import { useAuthentication } from "../controllers/useAuthentication";
 
 import ItemRow from "../components/ItemRow";
 import ItemDivider from "../components/Divider";
@@ -16,6 +17,8 @@ import ItemDivider from "../components/Divider";
  * @returns
  */
 const ItemScreen = ({ navigation }) => {
+  const { user } = useAuthentication();
+
   const [items, setItems] = useState();
 
   useEffect(() => {

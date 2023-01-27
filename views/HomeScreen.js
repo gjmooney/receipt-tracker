@@ -1,8 +1,12 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { useAuthentication } from "../controllers/useAuthentication";
 
 import HomeSplash from "../components/HomeSplash";
+import { getAuth, signOut } from "@firebase/auth";
 
 function HomeScreen({ navigation }) {
+  const { user } = useAuthentication();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -22,6 +26,10 @@ function HomeScreen({ navigation }) {
           onPress={() => navigation.navigate("Item")}
         >
           <Text style={styles.buttonText}>View Items</Text>
+        </Pressable>
+
+        <Pressable style={styles.button} onPress={() => signOut(getAuth())}>
+          <Text style={styles.buttonText}>Sign Out</Text>
         </Pressable>
       </View>
     </View>

@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useAuthentication } from "../controllers/useAuthentication";
+import { copyWithNewType } from "../controllers/dbService";
 
 import HomeSplash from "../components/HomeSplash";
 import { getAuth, signOut } from "@firebase/auth";
@@ -27,6 +28,10 @@ function HomeScreen({ navigation }) {
         >
           <Text style={styles.buttonText}>View Items</Text>
         </Pressable>
+
+        {/* <Pressable style={styles.button} onPress={() => copyWithNewType()}>
+          <Text style={styles.buttonText}>Update</Text>
+        </Pressable> */}
 
         <Pressable style={styles.button} onPress={() => signOut(getAuth())}>
           <Text style={styles.buttonText}>Sign Out</Text>

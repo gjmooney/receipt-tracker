@@ -70,6 +70,12 @@ export default function ItemForm() {
   };
 
   const onSubmit = ({ type, brand, store, price, date }) => {
+    type = type.trim().toLowerCase();
+    /* brand = brand.toLowerCase();
+    store = store.toLowerCase();
+    price = price.toLowerCase(); */
+
+    console.log("first", type);
     checkIfItemExistsAndAdd({ type, brand, store, price, date });
     setDate(new Date(getValues("date")).toLocaleDateString());
     reset({

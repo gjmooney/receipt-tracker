@@ -12,16 +12,17 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 
-export const addItem = async ({ type, brand, store, price, date }) => {
-  console.log("ADD ", type, brand, store, price, date);
+export const addItem = async ({ type, brand, store, price, size, date }) => {
+  console.log("ADD ", type, brand, store, price, size, date);
   try {
-    await setDoc(doc(db, "products", type), {
+    await setDoc(doc(db, "france_products", type), {
       type: type,
       history: [
         {
           brand: brand,
           store: store,
           price: price,
+          size: size,
           date: date,
           timestamp: Date.now(),
         },
@@ -33,14 +34,22 @@ export const addItem = async ({ type, brand, store, price, date }) => {
   }
 };
 
-export const addHistoryEntry = async ({ type, brand, store, price, date }) => {
-  console.log("HIST ", type, brand, store, price, date);
-  const itemRef = doc(db, "products", type);
+export const addHistoryEntry = async ({
+  type,
+  brand,
+  store,
+  price,
+  size,
+  date,
+}) => {
+  console.log("HIST ", type, brand, store, price, size, date);
+  const itemRef = doc(db, "france_products", type);
   await updateDoc(itemRef, {
     history: arrayUnion({
       brand: brand,
       store: store,
       price: price,
+      size: size,
       date: date,
       timestamp: Date.now(),
     }),
@@ -48,7 +57,7 @@ export const addHistoryEntry = async ({ type, brand, store, price, date }) => {
 };
 
 export const getAllItems = async () => {
-  const querySnapshot = await getDocs(collection(db, "products"));
+  const querySnapshot = await getDocs(collection(db, "france_products"));
   let data = [];
 
   const source = querySnapshot.metadata.fromCache ? "local cache" : "server";
@@ -67,25 +76,26 @@ export const checkIfItemExistsAndAdd = async ({
   brand,
   store,
   price,
+  size,
   date,
 }) => {
-  const itemRef = doc(db, "products", type);
+  const itemRef = doc(db, "france_products", type);
   const docSnap = await getDoc(itemRef);
 
   console.log("TEST ", docSnap.get("history"));
   if (docSnap.exists()) {
     //update item
-    addHistoryEntry({ type, brand, store, price, date });
+    addHistoryEntry({ type, brand, store, price, size, date });
     console.log("Updating item ", type);
   } else {
     //create item
-    addItem({ type, brand, store, price, date });
+    addItem({ type, brand, store, price, size, date });
     console.log("Adding item ", type);
   }
 };
 
 export const lowerCaseTypes = async () => {
-  const querySnapshot = await getDocs(collection(db, "products"));
+  const querySnapshot = await getDocs(collection(db, "france_products"));
   //console.log("first", querySnapshot);
 
   querySnapshot.forEach((doc) => {
@@ -98,7 +108,7 @@ export const lowerCaseTypes = async () => {
 };
 
 export const copyWithNewType = async () => {
-  const querySnapshot = await getDocs(collection(db, "products"));
+  const querySnapshot = await getDocs(collection(db, "france_products"));
 
   querySnapshot.forEach((doc) => {
     //console.log(docu.ref.id.toLowerCase());
@@ -108,7 +118,7 @@ export const copyWithNewType = async () => {
     checkIfItemExistsAndAddDATA(doc.data().type, doc.data());
   });
 
-  /* const itemRef = doc(db, "products", "Zimtinos ");
+  /* const itemRef = doc(db, "france_products", "Zimtinos ");
   const itemSnap = await getDoc(itemRef);
 
   if (itemSnap.exists()) {
@@ -134,7 +144,7 @@ export const addButtItem = async (id, data) => {
 export const addItemDATA = async (id, data) => {
   console.log("ADD ", id, data);
   try {
-    await setDoc(doc(db, "products", id), data);
+    await setDoc(doc(db, "france_products", id), data);
     console.log("Document written of type: ", id);
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -143,7 +153,7 @@ export const addItemDATA = async (id, data) => {
 
 export const addHistoryEntryDATA = async (id, data) => {
   console.log("HIST ", id, data);
-  const itemRef = doc(db, "products", id);
+  const itemRef = doc(db, "france_products", id);
   data.history.forEach((entry) => {
     updateDoc(itemRef, {
       history: arrayUnion(entry),
@@ -152,7 +162,7 @@ export const addHistoryEntryDATA = async (id, data) => {
 };
 
 export const checkIfItemExistsAndAddDATA = async (id, data) => {
-  const itemRef = doc(db, "products", id);
+  const itemRef = doc(db, "france_products", id);
   const docSnap = await getDoc(itemRef);
 
   console.log("TEST ", docSnap.get("history"));

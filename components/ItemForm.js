@@ -69,20 +69,21 @@ export default function ItemForm() {
     setShow(false);
   };
 
-  const onSubmit = ({ type, brand, store, price, date }) => {
+  const onSubmit = ({ type, brand, store, price, size, date }) => {
     type = type.trim().toLowerCase();
     /* brand = brand.toLowerCase();
     store = store.toLowerCase();
     price = price.toLowerCase(); */
 
     console.log("first", type);
-    checkIfItemExistsAndAdd({ type, brand, store, price, date });
+    checkIfItemExistsAndAdd({ type, brand, store, price, size, date });
     setDate(new Date(getValues("date")).toLocaleDateString());
     reset({
       type: "",
       brand: "",
       store: getValues("store"),
       price: "",
+      size: "",
       date: getValues("date"),
     });
   };
@@ -95,13 +96,7 @@ export default function ItemForm() {
 
   const onResetPress = () => {
     setDate("");
-    reset({
-      type: "",
-      brand: "",
-      store: "",
-      price: "",
-      date: "",
-    });
+    reset();
   };
   const onResetLongPress = () => {
     setDate("test_date");
@@ -185,6 +180,21 @@ export default function ItemForm() {
           rules={{ required: true, valueAsNumber: true }}
         />
         {errors.price && <Text>This is required.</Text>}
+
+        <Text style={styles.label}>Size</Text>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={(value) => onChange(value)}
+              value={value}
+            />
+          )}
+          name="size"
+        />
+        {errors.size && <Text>This is required.</Text>}
 
         <Text style={styles.label}>Date</Text>
         <Controller
